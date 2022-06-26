@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+  <title>Submission Page</title>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="favicon.ico" type="image/x-iconz" />
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.3.0/introjs.min.css" />
+  <link rel="stylesheet" href="https://d1lrk9cp1c3gxw.cloudfront.net/static/main/assets/css/base.css" />
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/atom-one-dark.min.css" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+  <script src="https://unpkg.com/highlightjs-badge/highlightjs-badge.min.js"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+  <script type="text/x-mathjax-config">MathJax.Hub.Config({tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}});</script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+  <style>
+    .page-content-edited {
+        transition: all 0.4s;
+        padding-left: 2rem;
+        padding-right: 2rem;
+    }
+    .btn-danger, .btn-danger:hover {
+    color: black;
+    background-color: #00ffef;
+    border-color: #00ffef;
+  }
+  </style>
+  
+  
+
+</head>
+
+<body>
+  <header class="p-3 bg-dark text-white">
+    <div class="container">
+      <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+        <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
+          <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
+        </a>
+
+        <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+          <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
+          <li><a href="#" class="nav-link px-2 text-white">Hello, {{username}} </a></li>
+        </ul>
+
+        <div class="text-end float-right">
+          <a href=" {% url 'logout' %} "><button type="button" class="btn btn-outline-light me-2">Logout</button></a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+<!-- Page Content -->
+
+<div class="page-content-edited mt-5 py-5" id="content">
+
+
+
+<script>
+  setTimeout(function remove_message() {
+    $(".alert1").css("display","none")
+  }, 3000);
+</script>
+
+<style>
+
+  .alert1 {
+    position: relative;
+    padding: 0.75rem 1.25rem;
+    border: 1px solid transparent;
+    border-top-color: transparent;
+    border-right-color: transparent;
+    border-bottom-color: transparent;
+    border-left-color: transparent;
+    border-radius: 5px;
+  }
+
+  .alert-error {
+    color: #852b3a;
+    background-color: #ffdde2;
+    border-color: #ffcfd7;
+  }
+
+  .alert-success {
+    color: #18705f;
+    background-color: #d5f7f0;
+    border-color: #c4f4eb;
+  }
+
+  .alert-info {
+    color: #00626e;
+    background-color: #ccf2f6;
+    border-color: #b8ecf3;
+  }
+
+  .alert-warning {
+    color: #855f28;
+    background-color: #fff0db;
+    border-color: blanchedalmond;
+  }
+
+  .closebtn {
+    margin-left: 15px;
+    color: white;
+    font-weight: bold;
+    float: right;
+    font-size: 22px;
+    line-height: 20px;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .closebtn:hover {
+    color: black;
+  }
+
+</style>
+
+
+
+<div class="container">
+  <div class="row">
+
+    
+
+    <!-- Before Submit -->
+
+    <div class="col-sm-12" id="before_submit">
+
+      <h3 class="text-center text-uppercase mb-4 opacity-h">Code</h3>
+
+      <form method="post" id="form_" class="ui form" action="" enctype="multipart/form-data">
+        {% csrf_token %}
+        <link href="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/widget.css" type="text/css" media="screen" rel="stylesheet">
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/ace.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/widget.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-ocaml.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-golang.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-d.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-javascript.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-csharp.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-python.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-php.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-perl6.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-scala.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-haskell.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-java.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-rust.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-c_cpp.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-kotlin.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-haml.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-pascal.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/mode-perl.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/theme-eclipse.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/theme-tomorrow.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/theme-twilight.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/theme-monokai.js"></script>
+        <script type="text/javascript" src="https://d1lrk9cp1c3gxw.cloudfront.net/static/django_ace/ace/theme-tomorrow_night_eighties.js"></script>
+        <div class="row">
+
+        <div class="mt-4">
+          <div id="django-box"><div class="django-ace-editor"><div class="django-ace-widget loading" data-behaviours="true" data-editor="" data-fontsize="18px" data-mode="c_cpp" data-readonly="false" data-showgutter="true" data-showinvisibles="false" data-showprintmargin="true" data-theme="twilight" data-usesofttabs="true" style="width:1100px; height:600px"><div></div></div><textarea name="code" cols="40" rows="10" maxlength="25000" id="id_code"></textarea></div></div>
+        </div>
+
+        <input type="hidden" name="problem_id" value="{{problem.id}}" />
+
+        <button class="btn btn-danger mt-4" type="submit">Submit<i class="bx bx-check bx-middle ml-2"></i></button>
+
+      </form>
+
+    </div>
+
+    <!-- After Submit -->
+
+    <div class="col-sm-12" id="after_submit" style="display: none;">
+      <div class="alert alert-primary text-center py-4" role="alert">
+        <div class="spinner-grow text-primary" role="status">
+          <span class="sr-only">Evaluating ...</span>
+        </div>
+        <h4 class="mt-3 alert-heading">Evaluating ...</h4>
+        <hr />
+        <p class="mb-0">Hold tight and let the master do it's job!</p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<script>
+
+  var theme = "monokai";
+
+  window.onload = function(event) {
+
+    var node = document.getElementsByClassName("django-ace-widget")[0];
+    var editor = ace.edit(node);
+    editor.setPrintMarginColumn(false);
+    var parser = new DOMParser();
+
+    var elem = document.createElement('textarea');
+    elem.innerHTML = ``;
+
+    var last_date = new Date(`None`);
+    const feature_date = new Date("12/11/2021, 22:00:00");
+    var decoded = (elem.value);
+
+    if (last_date >= feature_date) {
+      editor.setValue(decoded.slice(1, -1));
+    } else {
+      editor.setValue(decoded);
+    }
+
+    editor.setShowPrintMargin(false);
+    editor.setTheme("ace/theme/" + theme);
+
+    // set default lang as c_cpp
+    editor.getSession().setMode("ace/mode/" + langMapper.get(`None`));
+    document.getElementsByClassName("django-ace-widget")[0].style.fontSize='17px';
+
+    if (langMapper.get(`None`) === undefined)
+      document.getElementById("submit-btn").disabled = true;
+
+  }
+
+  $("#form_").submit(function(event) {
+    event.preventDefault();       // prevent default action 
+    $('#before_submit').hide();
+    $('#after_submit').show();
+    var editor = ace.edit(document.getElementsByClassName("django-ace-widget")[0]);
+    document.getElementById("id_code").value = JSON.stringify(editor.getValue());
+    $('form')[0].submit();
+  });
+
+  const langMapper = new Map();
+  langMapper.set("43","c_cpp");
+  langMapper.set("52","c_cpp");
+  langMapper.set("50","c_cpp");
+  langMapper.set("54","c_cpp");
+  langMapper.set("59","c_cpp");
+  langMapper.set("61","c_cpp");
+  langMapper.set("9","csharp");
+  langMapper.set("28","d");
+  langMapper.set("32","golang");
+  langMapper.set("12","haskell");
+  langMapper.set("60","java");
+  langMapper.set("36","java");
+  langMapper.set("48","kotlin");
+  langMapper.set("19","ocaml");
+  langMapper.set("3","c_cpp");
+  langMapper.set("4","pascal");
+  langMapper.set("51","pascal");
+  langMapper.set("13","perl");
+  langMapper.set("6","php");
+  langMapper.set("7","python");
+  langMapper.set("31","python");
+  langMapper.set("41","python");
+  langMapper.set("49","rust");
+  langMapper.set("20","scala");
+  langMapper.set("34","javascript");
+  langMapper.set("55","javascript");
+
+  document.getElementById("id_language").addEventListener("change", function() {
+    var lang_id = this.value;
+    console.log(lang_id);
+    var node = document.getElementsByClassName('django-ace-widget')[0].getAttributeNode("data-mode");
+    var editor = ace.edit(document.getElementsByClassName("django-ace-widget")[0]);
+    var old_code = editor.getSession().getValue();
+    var lang_val = langMapper.get(String(lang_id));
+    if(lang_val !== undefined) {
+      document.getElementById("submit-btn").disabled = false;
+      editor.getSession().setMode("ace/mode/" + lang_val);
+      editor.setTheme("ace/theme/" + theme);
+      editor.getSession().setValue(old_code);
+      document.getElementsByClassName("django-ace-widget")[0].style.fontSize='17px';
+    } else {
+      document.getElementById("submit-btn").disabled = true;
+    }
+  });
+
+  document.getElementById('theme-option-1').addEventListener("click", function(e) {
+    var editor = ace.edit(document.getElementsByClassName("django-ace-widget")[0]);
+    var old_code = editor.getSession().getValue();
+    theme = e.target.text;
+    editor.setTheme("ace/theme/" + theme);
+    editor.setShowPrintMargin(false);
+    editor.getSession().setValue(old_code);
+    document.getElementsByClassName("dropdown-item")[0];
+    document.getElementsByClassName("django-ace-widget")[0].style.fontSize='17px';
+  });
+
+  document.getElementById('theme-option-2').addEventListener("click", function(e) {
+    var editor = ace.edit(document.getElementsByClassName("django-ace-widget")[0]);
+    var old_code = editor.getSession().getValue();
+    theme = e.target.text;
+    editor.setTheme("ace/theme/" + theme);
+    editor.setShowPrintMargin(false);
+    editor.getSession().setValue(old_code);
+    document.getElementsByClassName("dropdown-item")[0];
+    document.getElementsByClassName("django-ace-widget")[0].style.fontSize='17px';
+  });
+
+  document.getElementById('theme-option-3').addEventListener("click", function(e) {
+    var editor = ace.edit(document.getElementsByClassName("django-ace-widget")[0]);
+    var old_code = editor.getSession().getValue();
+    theme = e.target.text;
+    editor.setTheme("ace/theme/" + theme);
+    editor.setShowPrintMargin(false);
+    editor.getSession().setValue(old_code);
+    document.getElementsByClassName("dropdown-item")[0];
+    document.getElementsByClassName("django-ace-widget")[0].style.fontSize='17px';
+  });
+
+  document.getElementById('size-1').addEventListener('click', function(e) {
+    var sz = e.target.text;
+    document.getElementsByClassName("django-ace-widget")[0].style.fontSize=`${sz}px`;
+  });
+
+  document.getElementById('size-2').addEventListener('click', function(e) {
+    var sz = e.target.text;
+    document.getElementsByClassName("django-ace-widget")[0].style.fontSize=`${sz}px`;
+  });
+
+  document.getElementById('size-3').addEventListener('click', function(e) {
+    var sz = e.target.text;
+    document.getElementsByClassName("django-ace-widget")[0].style.fontSize=`${sz}px`;
+  });
+
+</script>
+
+
+
+
+
+</div>
+
+<!-- Script -->
+
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.2.2/jquery.form.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/4.3.0/intro.min.js"></script>
+<script src="https://d1lrk9cp1c3gxw.cloudfront.net/static/main/assets/js/base.js"></script>
+
+
+
+
+</body>
+
+</html>
