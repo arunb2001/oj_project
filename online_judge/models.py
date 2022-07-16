@@ -13,8 +13,11 @@ class Problem(models.Model):
         return self.name
 
 class Submission(models.Model):
-    timestamp = models.DateTimeField()
-    problem_name = models.ForeignKey(Problem, on_delete=models.CASCADE, related_name='submissions')
-    submitted_by = models.ForeignKey(User, on_delete=models.CASCADE, related_name='submissions')
+    timestamp = models.DateTimeField(auto_now_add=True)
+    problemID = models.ForeignKey(Problem, on_delete=models.CASCADE, related_name='submissions')
+    userID = models.ForeignKey(User, on_delete=models.CASCADE, related_name='submissions')
     verdict = models.CharField(max_length=30)
     code = models.CharField(max_length=500)
+
+    def __str__(self) -> str:
+        return str(self.timestamp)

@@ -168,7 +168,9 @@
         <div class="row">
 
         <div class="mt-4">
-          <div id="django-box"><div class="django-ace-editor"><div class="django-ace-widget loading" data-behaviours="true" data-editor="" data-fontsize="18px" data-mode="c_cpp" data-readonly="false" data-showgutter="true" data-showinvisibles="false" data-showprintmargin="true" data-theme="twilight" data-usesofttabs="true" style="width:1100px; height:600px"><div></div></div><textarea name="code" cols="40" rows="10" maxlength="25000" id="id_code"></textarea></div></div>
+          <div id="django-box">
+            <div class="django-ace-editor">
+              <div class="django-ace-widget loading" data-behaviours="true" data-editor="" data-fontsize="18px" data-mode="c_cpp" data-readonly="false" data-showgutter="true" data-showinvisibles="false" data-showprintmargin="true" data-theme="twilight" data-usesofttabs="true" style="width:1100px; height:600px"><div></div></div><textarea name="code" cols="40" rows="10" maxlength="25000" id="id_code"></textarea></div></div>
         </div>
 
         <input type="hidden" name="problem_id" value="{{problem.id}}" />
@@ -238,7 +240,7 @@
     $('#before_submit').hide();
     $('#after_submit').show();
     var editor = ace.edit(document.getElementsByClassName("django-ace-widget")[0]);
-    document.getElementById("id_code").value = JSON.stringify(editor.getValue());
+    document.getElementById("id_code").value = editor.getValue();
     $('form')[0].submit();
   });
 
