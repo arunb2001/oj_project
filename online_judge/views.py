@@ -1,5 +1,4 @@
-import os, filecmp, docker
-import re
+import os
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
@@ -11,8 +10,6 @@ from .judge import evaluate, evaluateDocker, evaluateDockerSubprocess
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-client = docker.from_env()
 
 # Create your views here.
 def loginPage(request):
