@@ -1,14 +1,18 @@
-import os, filecmp
+import os, filecmp, docker
+import re
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from .models import Problem, Submission
 from django.contrib.auth.models import User
+from .judge import evaluate, evaluateDocker, evaluateDockerSubprocess
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
+
+client = docker.from_env()
 
 # Create your views here.
 def loginPage(request):
@@ -43,7 +47,7 @@ def logoutUser(request):
     logout(request)
     return redirect('login')
 
-@login_required(login_url='login')
+# @login_required(login_url='login')
 def homePage(request):
     problems = Problem.objects.all()
     submissions = Submission.objects.all().order_by("-timestamp")
@@ -74,21 +78,11 @@ def submissionPage(request, pk):
         user = User.objects.get(username=username)
         submissionCount = Submission.objects.filter(problemID=problem.id, userID=user.id).count()
         submissionFilename = user.username+'_'+str(problem.id)+'_'+str(submissionCount+1)+'.txt'
-        codeFile = os.path.join('submissions', submissionFilename)
-        inFile = os.path.join('input_files', problem.inputFile)
-        outFile = os.path.join('output_files', problem.outputFile)
-        with open(codeFile, 'w') as file:
+        with open(os.path.join('submissions', submissionFilename), 'w') as file:
             file.write(code)
-        with open('solution.cpp', 'w') as file:
-            file.write(code)
-        if os.path.exists('sol.exe'):
-            os.system('del sol.exe')
-        if os.system('g++ solution.cpp -o sol.exe & sol < '+ inFile +' > out.txt') != 0:
-            verdict = 'Compilation Error'
-        elif filecmp.cmp('out.txt', outFile, shallow=False):
-            verdict = 'Accepted'
-        else:
-            verdict = 'Wrong Answer'
+        
+        verdict = evaluateDockerSubprocess(code, problem.inputFile, problem.outputFile)
+        
         submission = Submission(problemID=problem, userID=user, verdict=verdict, code=submissionFilename)
         submission.save()
         context = {'problem':problem, 'username':request.user.username, 'verdict':verdict}
@@ -101,3 +95,11 @@ def codePage(request, code):
     with open(os.path.join('submissions', code), 'r') as file:
         content = file.read()
     return HttpResponse(content, content_type="text/plain")
+
+# docker run -it gcc OR docker run gcc
+# docker cp solution.cpp 8dcd15d65ea3:/a.cpp
+# docker cp input_files\1.txt 8dcd15d65ea3:/input.txt
+# we should remove a.out if it exists
+# docker exec 8dcd15d65ea3 g++ a.cpp
+# root@8dcd15d65ea3:/# ./a.out < input.txt > output.txt
+# docker cp 8dcd15d65ea3:/output.txt out1.txt
