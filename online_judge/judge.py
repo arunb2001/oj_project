@@ -1,6 +1,6 @@
 import os, filecmp, docker, subprocess
 
-client = docker.from_env()
+client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 def mycmp(file1, file2):
     with open(file1, "r") as file:
