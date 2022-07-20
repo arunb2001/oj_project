@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .forms import CreateUserForm
 from .models import Problem, Submission
 from django.contrib.auth.models import User
-from .judge import evaluate, evaluateDocker, evaluateDockerSubprocess
+from .judge import evaluate, evaluateDocker, evaluateDockerSubprocess, evaluateLinux
 
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -78,7 +78,7 @@ def submissionPage(request, pk):
         with open(os.path.join('submissions', submissionFilename), 'w') as file:
             file.write(code)
         
-        verdict = evaluateDockerSubprocess(code, problem.inputFile, problem.outputFile)
+        verdict = evaluateLinux(code, problem.inputFile, problem.outputFile)
         
         submission = Submission(problemID=problem, userID=user, verdict=verdict, code=submissionFilename)
         submission.save()

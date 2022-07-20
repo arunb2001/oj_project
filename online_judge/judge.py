@@ -1,6 +1,9 @@
 import os, filecmp, docker, subprocess
 
-client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+try:
+    client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+except:
+    pass
 
 def mycmp(file1, file2):
     with open(file1, "r") as file:
@@ -79,3 +82,26 @@ def evaluate(code, inFile, outFile):
         return 'Accepted'
     else:
         return 'Wrong Answer'
+
+def evaluateLinux(code, inFile, outFile):
+    inFile = os.path.join('input_files', inFile)
+    outFile = os.path.join('output_files', outFile)
+    with open('solution.cpp', 'w') as file:
+        file.write(code)
+    if os.path.exists('out.txt'):
+        os.remove('out.txt')
+    if os.path.exists('a.out'):
+        os.remove('a.out')
+    if os.system('g++ solution.cpp') != 0:
+        return 'Compilation Error'
+    elif os.system(f'./a.out < {inFile} > out.txt') != 0:
+        return 'Runtime Error'
+    else:
+        with open('out.txt', 'r') as file:
+            text = file.read()
+        with open('out.txt', 'w') as file:
+            file.write(text)
+        if filecmp.cmp('out.txt', outFile, shallow=False):
+            return 'Accepted'
+        else:
+            return 'Wrong Answer'
